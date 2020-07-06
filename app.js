@@ -27,7 +27,7 @@ mongoose.connect(process.env.DB_URI, {
 const passport = require('passport');
 const session = require('express-session');
 app.use(session({
-	secret: 'The egg came before the chicken'
+	secret: 'The egg came before the chicken',
 	resave: true,
 	saveUninitialized: false
 }));
@@ -65,7 +65,7 @@ const flash = require('connect-flash');
 app.use(flash());
 app.use('/', (req, res, next) => {
 
-	res.loocals.pageTitle = "Untitled";
+	res.locals.pageTitle = "Untitled";
 
 	res.locals.flash = req.flash();
 	res.locals.formData = req.session.formData || {};
@@ -86,4 +86,5 @@ app.use('/', routes);
 /*
   Step 8: Start the server
 */
-const port = process.env.PORT
+const port = process.env.PORT;
+app.listen(process.env.port || 3000, port => console.log(`Listening on port ${port}`));

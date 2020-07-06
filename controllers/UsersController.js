@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const User = require('../models/user');
 const viewPath = 'users';
 
 exports.new = (req, res) => {
@@ -10,9 +10,11 @@ exports.new = (req, res) => {
 exports.create = async (req, res) => {
   const userDetails = req.body;
   req.session.flash = {};
-  
+
   try {
     // Step 1: Create the new user and register them with Passport
+    const user = new User(req.body);
+    await User.register(user, req.body.password);
 
     req.flash('success', 'The user was successfully created');
     res.redirect(`/login`);

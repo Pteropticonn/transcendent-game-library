@@ -1,3 +1,32 @@
 <!--
   Step 1: The form must be sharable between the new and edit views.
 -->
+<form action="<%= (typeof actionPath === 'undefined') ? '/resources' : actionPath %>", method="POST">
+  <% if (typeof actionPath !== 'undefined') { %>
+    <input type="hidden" name="id" value="<%= formData.id %>">
+  <% } %>
+
+  <div class="form-group">
+    <label for="gameTitle">Game</label>
+    <input type="text" name="gameTitle" class="form-control" value="<%= formData.gameTitle %>">
+  </div>
+
+  <div class="form-group">
+    <label for="playtime">Play time</label>
+    <textarea name="playtime" class="form-control summernote">
+      <%= formData.playtime %>
+    </textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="installationStatus">Status</label>
+    <select name="installationStatus" class="form-control">
+      <option value="DRAFT">Draft</option>
+      <option <%= formData.installationStatus && formData.installationStatus === 'INSTALLED' ? 'selected' : null %> value="INSTALLED">Installed</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <button class="btn btn-dark">Submit</button>
+  </div>
+</form>

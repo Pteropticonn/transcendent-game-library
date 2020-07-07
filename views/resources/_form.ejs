@@ -13,15 +13,15 @@
 
   <div class="form-group">
     <label for="playtime">Play time</label>
-    <textarea name="playtime" class="form-control summernote">
+    <input type="number" name="playtime" class="form-control summernote">
       <%= formData.playtime %>
-    </textarea>
+    </input>
   </div>
 
   <div class="form-group">
     <label for="installationStatus">Status</label>
     <select name="installationStatus" class="form-control">
-      <option value="DRAFT">Draft</option>
+      <option value="NOTINSTALLED">Not Installed</option>
       <option <%= formData.installationStatus && formData.installationStatus === 'INSTALLED' ? 'selected' : null %> value="INSTALLED">Installed</option>
     </select>
   </div>

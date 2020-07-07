@@ -1,4 +1,4 @@
-const {new: _new, index, show, create, edit, update, delete: _delete } = require('../controllers/ResourcesController');
+const {play, new: _new, index, show, create, edit, update, delete: _delete} = require('../controllers/ResourcesController');
 
 
 module.exports = router => {
@@ -9,4 +9,5 @@ module.exports = router => {
   router.post('/resources/delete', _delete);
   router.get('/resources/:id/edit', edit);
   router.get('/resources/:id', show);
+  router.get('/resources/play', play);
 };

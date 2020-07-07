@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-  <a class="navbar-brand" href="/">GuessIT!</a>
+  <a class="navbar-brand" href="/">Game Library</a>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -12,14 +12,19 @@
       </li>
 
       <% if (authorized) { %>
-        
+        <li class="nav-item">
+            <a class="nav-link" href="/resources">Gamez</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/resources/new">Add a game</a>
+        </li>
       <% } %>
     </ul>
 
     <ul class="navbar-nav">
       <% if (!authorized) { %>
         <li class="nav-item">
-          <a href="/users/new" class="nav-link">
+          <a href="/register" class="nav-link">
             <i class="fa fa-user-plus"></i>
             Register
           </a>

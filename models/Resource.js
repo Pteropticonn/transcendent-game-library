@@ -16,10 +16,10 @@ const mongoose = require('mongoose');
 
 const resourceSchema = new mongoose.Schema({
 	user: {
-	 type: mongoose.Schema.Types.ObjectId,
-	 ref: 'User',
-	 required: true
- },
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+		required: true
+	},
 	gameTitle: {
 		type: String,
 		required: true
@@ -30,12 +30,27 @@ const resourceSchema = new mongoose.Schema({
 	},
 	installationStatus: {
 		type: String,
-		enum: ['NOT INSTALLED', 'INSTALLED'],
+		enum: ['NOTINSTALLED', 'INSTALLED'],
 		default: 'INSTALLED'
+	},
+	scores: {
+		type: Array,
+		default: [],
+		required: false
+	},
+	playable: {
+		type: String,
+		enum: ['no', 'yes'],
+		default: 'no'
 	}
 }, {
-  timestamps: true
+	timestamps: true
 });
 
+resourceSchema.virtual('highScore')
+.get(function () {
+  const highScore = Math.max(...this.scores);
+  return highScore;
+});
 
 module.exports = mongoose.model('Resource', resourceSchema);

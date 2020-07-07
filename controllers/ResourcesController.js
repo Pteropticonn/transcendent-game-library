@@ -10,6 +10,7 @@ const viewPath = 'resources';
 const Resource = require('../models/resource');
 const User = require('../models/user');
 
+
 /*
   The resource controller must contain the 7 resource actions:
   - index
@@ -21,9 +22,17 @@ const User = require('../models/user');
   - delete
 */
 
+//no idea why this won't render the page
+exports.play = (req, res) => {
+  res.render(`${viewPath}/play`, {
+    pageTitle: 'Give it a shot'
+  });
+};
+
+
 exports.index = async (req, res) => {
 	try {
-		const resources = await resource
+		const resources = await Resource
 		.find()
 		.populate('user');
 
@@ -33,7 +42,7 @@ exports.index = async (req, res) => {
 		});
 	} catch (e) {
 		req.flash('danger', `Woops! Something went wrong displaying your games ${e}`);
-		res.direct('/');
+		res.render(`${viewPath}/`);
 	}
 };
 
@@ -51,23 +60,30 @@ exports.show = async (req, res) => {
 	}
 };
 
+exports.new = (req, res) => {
+  res.render(`${viewPath}/new`, {
+    pageTitle: 'New Game'
+  });
+};
+
+
 exports.create = async (req, res) => {
 	try {
 		const {user: email } = req.session.passport;
-		const usesr = await User.findOne({email: email});
+		const user = await User.findOne({email: email});
 		const resource = await Resource.create({user: user._id, ...req.body});
 
 		req.flash('success', 'Game added to library!');
-		res.redirect(`/resources/${resource.id}`);
+		res.redirect(`${viewPath}/`);
 	} catch (e) {
-		req.flash('danger', '${e}...game unable to be added to library');
-		res.redirect('/');
+		req.flash('danger', `${e}...game unable to be added to library`);
+		res.redirect(`${viewPath}/`);
 	}
 };
 
 exports.edit = async (req, res) => {
 	try {
-		const resource = await Resource.findbyId(req.params.id);
+		const resource = await Resource.findById(req.params.id);
 		res.render(`${viewPath}/edit`, {
 			pageTitle: resource.title,
 			formData: resource
@@ -88,7 +104,7 @@ exports.update = async (req, res) => {
 
 		const attributes = {user: user._id, ...req.body};
 		await Resource.validate(attributes);
-		await Blog.findByIdAndUpdate(attributes.id, attributes);
+		await Resource.findByIdAndUpdate(attributes.id, attributes);
 
 		req.flash('success', 'The game was successfully updated');
 		res.redirect(`/resources/${req.body.id}`);
@@ -101,11 +117,11 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
 	try {
-		await Resource.deleteOne({id: req.body.id});
+		await Resource.deleteOne({_id: req.body.id});
 		req.flash('success', 'The game was successfuly removed from your library');
 		res.redirect(`/resources`);
 	} catch (e) {
 		req.flash('danger', `There was an error removing this game from your library: ${e}`);
-		res.redirect('/')
+		res.redirect('/resources')
 	}
 };

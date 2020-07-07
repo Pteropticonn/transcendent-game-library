@@ -10,20 +10,20 @@
 
   TASKS:
     The following files must be repaired/completed:
-    - /app.js
-    - /routes.js
-    - /controllers/SessionsController.js
-    - /controllers/UsersController.js
-    - /controllers/ResourcesController.js
-    - /models/User.js
-    - /models/Resource.js
-    - /views/resources/index.js
-    - /views/resources/show.js
-    - /views/resources/new.js
-    - /views/resources/edit.js
-    - /views/resources/_form.js
-    - /routes/resources.js
-  
+    - /app.js  🗹
+    - /routes.js 🗹
+    - /controllers/SessionsController.js 🗹
+    - /controllers/UsersController.js 🗹
+    - /controllers/ResourcesController.js 🗹
+    - /models/User.js  🗹
+    - /models/Resource.js 🗹
+    - /views/resources/index.js 🗹
+    - /views/resources/show.js 🗹
+    - /views/resources/new.js 🗹
+    - /views/resources/edit.js 🗹
+    - /views/resources/_form.js 🗹
+    - /routes/resources.js 🗹
+
   GOAL:
     Create an application that utilizes the User as an
     associative part to another resource. You are not
@@ -36,7 +36,7 @@
 
     Have fun with this. Bonus marks are rewarded to those
     who think outside the box and create an interesting app.
-  
+
   NOTE:
     YOU MUST USE THE FILES PROVIDED!
     If you have an idea for an application that invokes the

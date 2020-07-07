@@ -1,35 +1,80 @@
 html,
 body {
-  height: 100%;
-  width: 100%;
+	height: 100%;
+	width: 100%;
 }
 
 header:not(.home-cta), .alert {
-  margin-top: 80px;
+	margin-top: 80px;
 }
 
 .home-cta {
-  background: url('/images/background.jpg');
-  background-size: cover;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	background: url('/images/background.png');
+	background-repeat: round;
+	background-size: cover;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .home-cta::after {
-  position: absolute;
-  background: rgba(0, 0, 0, 0.5);
-  height: 100%;
-  width: 100%;
-  content: "";
+	position: absolute;
+	background: rgba(0, 0, 0, 0.5);
+	height: 100%;
+	width: 100%;
+	content: "";
 }
 
-.home-cta > h1 {
-  color: #fff;
-  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-  font-size: 10rem;
-  text-align: center;
-  z-index: 1;
+.home-cta>h1 {
+	color: #fff;
+	text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+	font-size: 10rem;
+	text-align: center;
+	z-index: 1;
+}
+
+.grid-item {
+	border: 1px solid grey;
+	/* background: url('https://www.positronx.io/wp-content/uploads/2019/03/galaxy-background-2634-08.jpg') 0 0 no-repeat; */
+	min-height: 240px;
+	background-size: cover;
+}
+
+#game-grid {
+	justify-content: center;
+	display: grid;
+	margin: 30px auto;
+	width: 960px;
+	grid-template-columns: repeat(4, 240px);
+	grid-template-rows: repeat(4, 240px);
+}
+
+.grid-item:hover .overlay-block {
+	opacity: 0;
+	cursor: pointer;
+}
+
+.overlay-block {
+	position: absolute;
+	width: 240px;
+	height: 240px;
+	opacity: 1;
+	transition: 0.5s ease;
+	background-color: rgba(247, 230, 255, 0.4);
+	overflow: hidden;
+}
+
+.grid-item p {
+  width: fit-content;
+  margin: auto;
+}
+
+.grid-item a {
+	color: #fff;
+}
+
+.grid-item h3 {
+	padding: 15px 30px;
 }

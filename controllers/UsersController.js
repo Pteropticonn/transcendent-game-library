@@ -1,28 +1,28 @@
 const User = require('../models/user');
+const Resource = require('../models/resource');
 const viewPath = 'users';
 
-exports.new = (req, res) => {
+exports.new = async (req, res) => {
   res.render(`${viewPath}/new`, {
     pageTitle: 'New User'
   });
 };
 
 exports.create = async (req, res) => {
-  const userDetails = req.body;
-  req.session.flash = {};
-
   try {
-    // Step 1: Create the new user and register them with Passport
+
+
     const user = new User(req.body);
     await User.register(user, req.body.password);
 
-    req.flash('success', 'The user was successfully created');
-    res.redirect(`/login`);
-  } catch (error) {
-    console.log('Errors');
-    req.flash('danger', error.message);
+    const freeGame = await Resource.create({user: user._id, gameTitle: 'The Epic & Free Number Generating Game', playtime: 0, installationStatus: 'INSTALLED', scores: [0], playable: 'yes'});
 
+    req.flash('success', `Welcome, ${user.fullname}. Thank you for registering.`);
+    res.redirect('/');
+  } catch (error) {
+    console.log(error.message);
+    req.flash('danger', error.message);
     req.session.formData = req.body;
-    res.redirect(`${viewPath}/new`);
+    res.redirect(`/register`);
   }
 };

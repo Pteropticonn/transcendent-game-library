@@ -12,13 +12,14 @@ mongoose.connect(process.env.DB_URI, {
     password: process.env.DB_PASS
   },
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex: true
 }).catch(err => console.error(`Error: ${err}`));
 
-//Implement Body Parser
+// Implement Body Parser
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true })); //takes URL and splits it up into compontent parts for body parser
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Setup our session
 const passport = require('passport');

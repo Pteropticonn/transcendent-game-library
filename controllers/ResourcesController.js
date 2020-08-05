@@ -11,17 +11,6 @@ const Resource = require('../models/resource');
 const User = require('../models/user');
 
 
-/*
-  The resource controller must contain the 7 resource actions:
-  - index
-  - show
-  - new
-  - create
-  - edit
-  - update
-  - delete
-*/
-
 //no idea why this won't render the page
 exports.play = (req, res) => {
   res.render(`${viewPath}/play`, {
@@ -31,33 +20,27 @@ exports.play = (req, res) => {
 
 
 exports.index = async (req, res) => {
-	try {
-		const resources = await Resource
-		.find()
-		.populate('user');
+  try {
+    const resources = await Resource
+      .find()
+      .populate('user')
+      .sort({updatedAt: 'desc'});
 
-		res.render(`${viewPath}/index`, {
-			pageTitle: 'Games',
-			resources: resources
-		});
-	} catch (e) {
-		req.flash('danger', `Woops! Something went wrong displaying your games ${e}`);
-		res.render(`${viewPath}/`);
-	}
+    res.status(200).json(resources);
+  } catch (error) {
+    res.status(400).json({message: 'There was an error fetching the Game Library', error});
+  }
 };
 
 exports.show = async (req, res) => {
-	try {
-		const resource = await Resouce.findById(req.params.id)
-		.populate('user');
-		console.log(resource);
-		res.render(`${viewPath}/show`, {
-			pageTitle: resource.title,
-			resource: resource
-		});
-	} catch (e) {
-		req.flash('danger', `There was an error displaying this game: ${e}`);
-	}
+  try {
+    const resource = await Resource.findById(req.params.id)
+      .populate('user');
+
+    res.status(200).json(resource);
+  } catch (error) {
+    res.status(400).json({message: "There was an error fetching the Game"});
+  }
 };
 
 exports.new = (req, res) => {
@@ -66,62 +49,58 @@ exports.new = (req, res) => {
   });
 };
 
-
 exports.create = async (req, res) => {
-	try {
-		const {user: email } = req.session.passport;
-		const user = await User.findOne({email: email});
-		const resource = await Resource.create({user: user._id, ...req.body});
+  console.log(req.body);
+  try {
+    const { user: email } = req.session.passport;
+    const user = await User.findOne({email: email});
 
-		req.flash('success', 'Game added to library!');
-		res.redirect(`${viewPath}/`);
-	} catch (e) {
-		req.flash('danger', `${e}...game unable to be added to library`);
-		res.redirect(`${viewPath}/`);
-	}
+    const resource = await Resource.create({user: user._id, ...req.body});
+
+    res.status(200).json(resource);
+  } catch (error) {
+    res.status(400).json({message: "There was an error adding the game to the library", error});
+  }
 };
 
 exports.edit = async (req, res) => {
-	try {
-		const resource = await Resource.findById(req.params.id);
-		res.render(`${viewPath}/edit`, {
-			pageTitle: resource.title,
-			formData: resource
-		});
-	} catch (e) {
-		req.flash('danger', `There was an error processing the edit request: ${e}`);
-		res.redirect('/');
-	}
+  try {
+    const resource = await Resource.findById(req.params.id);
+    res.render(`${viewPath}/edit`, {
+      pageTitle: resource.title,
+      formData: resource
+    });
+  } catch (error) {
+    req.flash('danger', `There was an error accessing this game: ${error}`);
+    res.redirect('/');
+  }
 };
 
 exports.update = async (req, res) => {
-	try {
-		const {user: email } = req.session.passport;
-		const user = await User.findOne({email: email});
+  try {
+    const { user: email } = req.session.passport;
+    const user = await User.findOne({email: email});
 
-		let resource = await Resource.findById(req.body.id);
-		if(!resource) throw new Error('Resource could not be found');
+    let resource = await Resource.findById(req.body.id);
+    if (!resource) throw new Error('Game could not be found');
 
-		const attributes = {user: user._id, ...req.body};
-		await Resource.validate(attributes);
-		await Resource.findByIdAndUpdate(attributes.id, attributes);
+    const attributes = {user: user._id, ...req.body};
+    await Resource.validate(attributes);
+    await Resource.findByIdAndUpdate(attributes.id, attributes);
 
-		req.flash('success', 'The game was successfully updated');
-		res.redirect(`/resources/${req.body.id}`);
-
-	} catch (e) {
-		req.flash('danger', `Error updating this game: ${e}`);
-		res.redirect(`/resources/${req.body.id}/edit`);
-	}
+    req.flash('success', 'The Game details were updated successfully');
+    res.redirect(`/resources/${req.body.id}`);
+  } catch (error) {
+    req.flash('danger', `There was an error updating this Game: ${error}`);
+    res.redirect(`/resources/${req.body.id}/edit`);
+  }
 };
 
 exports.delete = async (req, res) => {
-	try {
-		await Resource.deleteOne({_id: req.body.id});
-		req.flash('success', 'The game was successfuly removed from your library');
-		res.redirect(`/resources`);
-	} catch (e) {
-		req.flash('danger', `There was an error removing this game from your library: ${e}`);
-		res.redirect('/resources')
-	}
+  try {
+    await Resource.deleteOne({_id: req.body.id});
+    res.status(200).json({message: "The game was successfuly removed from your library."});
+  } catch (error) {
+    res.status(400).jason({message: "There was an error deleting the resource"});
+  }
 };

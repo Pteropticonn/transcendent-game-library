@@ -37,7 +37,7 @@ return (
 						{user ? (
 							<Fragment>
 								<div className="dropdown-divider"></div>
-								<Link to="/resources/new" className="dropdown-item">New Post</Link>
+								<Link to="/resources/new" className="dropdown-item">Add game</Link>
 							</Fragment>
 						) : null}
 					</div>

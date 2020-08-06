@@ -9,9 +9,9 @@ const Edit = function (props) {
   const id = props.location.state.id; // found in docs for react router
 
   const [inputs, setInputs] = useState({
-    title: '',
-    content: '',
-    status: 'DRAFT'
+    gameTitle: '',
+    playtime: '',
+    installationStatus: 'NOTINSTALLED'
   });
 
   const [redirect, setRedirect] = useState(false);
@@ -19,6 +19,7 @@ const Edit = function (props) {
   useEffect(() => {
     (async () => {
       const resourceResp = await Axios.get(`/api/resources/${id}`);
+      console.log(resourceResp);
       if (resourceResp.status === 200) setInputs(resourceResp.data);
     })();
   }, []);
@@ -62,7 +63,7 @@ const Edit = function (props) {
   return (
     <Container className="my-5">
       <header>
-        <h1>Edit Game Post</h1>
+        <h1>Edit Game</h1>
       </header>
 
       <hr/>
@@ -70,34 +71,33 @@ const Edit = function (props) {
       <div>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
-            <Form.Label>Title:</Form.Label>
+            <Form.Label>Rename game</Form.Label>
             <Form.Control
-              name="title"
+              name="gameTitle"
               onChange={handleInputChange}
-              value={inputs.title}
+              value={inputs.gameTitle}
             />
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Content:</Form.Label>
+            <Form.Label>Play Time:</Form.Label>
             <Form.Control
-              as="textarea"
-              name="content"
+              name="playtime"
               onChange={handleInputChange}
-              value={inputs.content}
+              value={inputs.playtime}
             />
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Status:</Form.Label>
+            <Form.Label>Installation status:</Form.Label>
             <Form.Control
               as="select"
-              name="status"
+              name="installationStatus"
               onChange={handleInputChange}
-              defaultValue={inputs.status || 'DRAFT'}
+              defaultValue={inputs.installationStatus || 'NOTINSTALLED'}
             >
-              <option value="DRAFT">draft</option>
-              <option value="PUBLISHED">published</option>
+              <option value="NOTINSTALLED">Not Installed</option>
+              <option value="INSTALLED">Installed</option>
             </Form.Control>
           </Form.Group>
 

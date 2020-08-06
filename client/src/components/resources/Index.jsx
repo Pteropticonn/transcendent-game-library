@@ -3,9 +3,38 @@ import { Container } from 'react-bootstrap';
 import Axios from 'axios';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+// import ScriptTag from 'react-script-tag';
+import { makeStyles } from "@material-ui/core/styles";
+import { Grid, Paper } from "@material-ui/core";
+
+const section = {
+  height: "100%",
+  paddingTop: 5,
+  backgroundColor: "#fff"
+};
+
+const useStyles = makeStyles( (theme) =>({
+ grid: {
+   padding: "2%",
+   width: '100%',
+   height: '100%',
+   margin: '0px'
+ },
+ paper: {
+   height: "60%",
+   padding: theme.spacing(2),
+   textAlign: 'center',
+   color: theme.palette.text.secondary,
+   background: theme.palette.success.light
+ },
+ header: {
+   height: '20%',
+   textAlign: 'center'
+ }
+}));
 
 const Index = function ({user}) {
-
+  const classes = useStyles();
   const [resources, setResources] = useState([]);
 
   useEffect(() => {
@@ -34,38 +63,22 @@ const Index = function ({user}) {
   };
 
   return (
-    <Container className="my-5">
-      <header>
-        <h1>Archive</h1>
-      </header>
 
-      <hr/>
-
-      <div className="content">
+      <Grid container spacing={2} className={classes.grid}>
+        <Grid item xs={12} md={12} lg={12}>
+          <h1 className={classes.header}>Game Library</h1>
+        </Grid>
         {resources && resources.map((resource, i) => (
-          <div key={i} className="card my-3">
-            <div className="card-header clearfix">
-              <div className="float-left">
-                <h5 className="card-title">
-                  {resource.title}
-                </h5>
 
-                {resource.user ? (
-                  <small>~{resource.user.fullname}</small>
-                ) : null}
-              </div>
+          <Grid key={i} item xs={6} md={3} lg={3}>
+            <Paper className={classes.paper}>
+              <h3>{resource.gameTitle}</h3>
+              <hr/>
+              <h4>Playtime: {resource.playtime} hours</h4>
+              <hr/>
+              <h5>{resource.installationStatus}</h5>
 
-              <div className="float-right">
-                <small>{resource.updatedAt}</small>
-              </div>
-            </div>
-
-            <div className="card-body">
-              <p className="card-text">
-                {resource.synopsis}
-              </p>
-            </div>
-
+            </Paper>
             {user ? (
               <div className="card-footer">
                 <Link to={{
@@ -82,10 +95,13 @@ const Index = function ({user}) {
                 </button>
               </div>
             ) : null}
-          </div>
+          </Grid>
+
+
         ))}
-      </div>
-    </Container>
+
+      </Grid>
+
   );
 
 };

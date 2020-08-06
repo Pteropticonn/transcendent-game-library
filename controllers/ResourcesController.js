@@ -82,6 +82,7 @@ exports.update = async (req, res) => {
     const user = await User.findOne({email: email});
 
     let resource = await Resource.findById(req.body.id);
+    console.log(req.body);
     if (!resource) throw new Error('Game could not be found');
 
     const attributes = {user: user._id, ...req.body};

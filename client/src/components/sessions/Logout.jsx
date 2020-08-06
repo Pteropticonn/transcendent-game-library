@@ -27,7 +27,7 @@ const Logout = ({setUser}) => {
     })();
   }, []);
 
-  if (redirect) return (<Redirect to="/blogs"/>);
+  if (redirect) return (<Redirect to="/"/>);
   return null;
 };
 

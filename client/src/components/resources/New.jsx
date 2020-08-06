@@ -7,9 +7,9 @@ import { toast } from 'react-toastify';
 const New = function () {
 
   const [inputs, setInputs] = useState({
-    title: '',
-    content: '',
-    status: 'DRAFT'
+    gameTitle: '',
+    playtime: '',
+    installationStatus: 'NOTINSTALLED'
   });
 
   const [redirect, setRedirect] = useState(false);
@@ -63,37 +63,36 @@ const New = function () {
           <Form.Group>
             <Form.Label>Title:</Form.Label>
             <Form.Control
-              name="title"
+              name="gameTitle"
               onChange={handleInputChange}
               value={inputs.title}
             />
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Content:</Form.Label>
+            <Form.Label>Play Time:</Form.Label>
             <Form.Control
-              as="textarea"
-              name="content"
+              name="playtime"
               onChange={handleInputChange}
               value={inputs.content}
             />
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Status:</Form.Label>
+            <Form.Label>Installation status:</Form.Label>
             <Form.Control
               as="select"
-              name="status"
+              name="installationStatus"
               onChange={handleInputChange}
-              defaultValue={inputs.status || 'DRAFT'}
+              defaultValue={inputs.status || 'NOTINSTALLED'}
             >
-              <option value="DRAFT">draft</option>
-              <option value="PUBLISHED">published</option>
+              <option value="NOTINSTALLED">Not Installed</option>
+              <option value="INSTALLED">Installed</option>
             </Form.Control>
           </Form.Group>
 
           <Form.Group>
-            <button type="submit" className="btn btn-primary">Create</button>
+            <button type="submit" className="btn btn-primary">Add</button>
           </Form.Group>
         </Form>
       </div>

@@ -21,7 +21,7 @@ const useStyles = makeStyles( (theme) =>({
    margin: '0px'
  },
  paper: {
-   height: "60%",
+   height: "80%",
    padding: theme.spacing(2),
    textAlign: 'center',
    color: theme.palette.text.secondary,
@@ -30,7 +30,8 @@ const useStyles = makeStyles( (theme) =>({
  header: {
    height: '20%',
    textAlign: 'center'
- }
+ },
+ playable: {}
 }));
 
 const Index = function ({user}) {
@@ -44,8 +45,11 @@ const Index = function ({user}) {
   }, []);
 
   const getResources = async () => {
-    const resourcesResp = await Axios.get('/api/resources');
+    const resourcesResp = await Axios.post('/api/resources', {
+      user: user._id
+    });
     if (resourcesResp.status === 200) setResources(resourcesResp.data);
+    console.log(resourcesResp);
   };
 
   const deleteResource = async resource => {
@@ -61,7 +65,7 @@ const Index = function ({user}) {
       toast("There was an error deleting the game", {type: toast.TYPE.ERROR});
     }
   };
-
+  console.log(user);
   return (
 
       <Grid container spacing={2} className={classes.grid}>
@@ -76,6 +80,8 @@ const Index = function ({user}) {
               <hr/>
               <h4>Playtime: {resource.playtime} hours</h4>
               <hr/>
+              {resource.playable == 'yes' ?   <h4 className={classes.playable}>Click to launch!</h4>
+                : null}
               <h5>{resource.installationStatus}</h5>
 
             </Paper>

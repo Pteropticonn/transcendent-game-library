@@ -8,7 +8,7 @@ function auth (req, res, next) {
 }
 
 module.exports = router => {
-  router.get('/resources', index);
+  router.post('/resources',  index);
   router.get('/resources/new', _new);
   router.post('/resources', create);
   router.post('/resources/update', update);

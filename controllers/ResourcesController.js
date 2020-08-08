@@ -1,10 +1,3 @@
-// INSTRUCTIONS:
-/*
-  Create a new resource controller that uses the
-  User as an associative collection (examples):
-  - User -> Books
-  - User -> Reservation
-*/
 
 const viewPath = 'resources';
 const Resource = require('../models/resource');
@@ -20,16 +13,18 @@ exports.play = (req, res) => {
 
 
 exports.index = async (req, res) => {
+
   try {
     const resources = await Resource
       .find()
-      .populate('user')
-      .sort({updatedAt: 'desc'});
+      .populate('User')
+      .sort({gameTitle: 'asc'});
 
     res.status(200).json(resources);
   } catch (error) {
     res.status(400).json({message: 'There was an error fetching the Game Library', error});
   }
+
 };
 
 exports.show = async (req, res) => {

@@ -1,20 +1,28 @@
-const games = document.querySelectorAll(".grid-item");
+document.addEventListener("DOMContentLoaded", () => {
+	console.log("testing");
 
-for (var game of games) {
-	game.addEventListener('click', () => {
-		console.log("testing");
-	});
-	if (game.classList.contains('playable')) {
-		game.addEventListener('click', () => {
-			if (window.confirm('Launch game?')) {
-				window.location = '/resources/new';
-			}
-			else{
-				window.alert('Cancelling Launch');
-			}
-		});
-	}
-}
+$('.paper').on('click', function() {
+	console.log("test");
+})
+
+	// for (var game of games) {
+	// 	game.addEventListener('click', () => {
+	// 		console.log("testing");
+	// 	});
+	// 	if (game.classList.contains('playable')) {
+	// 		game.addEventListener('click', () => {
+	// 			if (window.confirm('Launch game?')) {
+	// 				window.location = '/resources/new';
+	// 			} else {
+	// 				window.alert('Cancelling Launch');
+	// 			}
+	// 		});
+	// 	}
+	// }
+});
+
+
+
 
 // let newGrid = (size) => {
 //     for (i = 0; i < size * size; i++) {

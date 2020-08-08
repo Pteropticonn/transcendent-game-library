@@ -34,7 +34,25 @@ const useStyles = makeStyles( (theme) =>({
  playable: {}
 }));
 
+
 const Index = function ({user}) {
+
+  // const displayQuestion = () => {
+  //     this.setState({
+  //         displayQuestions: !this.gameState.displayQuestions
+  //     })
+  // }
+  //
+  // const gameState = {
+  //      questions: [
+  //         { id: 'fdsd', title: 'Why is the sky blue?' },
+  //         { id: 'adsf', title: 'Who invented pizza?' },
+  //         { id: 'afdsf', title: 'Is green tea overrated?' },
+  //      ],
+  //         displayQuestions: false
+  // }
+  //
+
   const classes = useStyles();
   const [resources, setResources] = useState([]);
 
@@ -80,7 +98,7 @@ const Index = function ({user}) {
               <hr/>
               <h4>Playtime: {resource.playtime} hours</h4>
               <hr/>
-              {resource.playable == 'yes' ?   <h4 className={classes.playable}>Click to launch!</h4>
+              {resource.playable == 'yes' ? <h4 className={classes.playable}>Click to launch!</h4>
                 : null}
               <h5>{resource.installationStatus}</h5>
 

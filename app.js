@@ -12,7 +12,8 @@ mongoose.connect(process.env.DB_URI, {
     password: process.env.DB_PASS
   },
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex: true
 }).catch(err => console.error(`Error: ${err}`));
 
 // Implement Body Parser

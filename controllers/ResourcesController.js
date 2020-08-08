@@ -81,19 +81,20 @@ exports.update = async (req, res) => {
     const { user: email } = req.session.passport;
     const user = await User.findOne({email: email});
 
-    let resource = await Resource.findById(req.body.id);
+    let resource = await Resource.findById(req.body._id);
+    console.log(resource);
     console.log(req.body);
     if (!resource) throw new Error('Game could not be found');
 
     const attributes = {user: user._id, ...req.body};
     await Resource.validate(attributes);
-    await Resource.findByIdAndUpdate(attributes.id, attributes);
+    await Resource.findByIdAndUpdate(attributes._id, attributes);
 
     req.flash('success', 'The Game details were updated successfully');
-    res.redirect(`/resources/${req.body.id}`);
+    res.redirect(`/`);
   } catch (error) {
     req.flash('danger', `There was an error updating this Game: ${error}`);
-    res.redirect(`/resources/${req.body.id}/edit`);
+    res.redirect(`/`);
   }
 };
 

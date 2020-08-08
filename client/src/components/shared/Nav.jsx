@@ -32,7 +32,7 @@ return (
 					</a>
 
 					<div className="dropdown-menu" aria-labelledby="resourcesDropdown">
-						<Link to="/resources" className="dropdown-item">Archive</Link>
+						<Link to="/resources" className="dropdown-item">Game Library</Link>
 
 						{user ? (
 							<Fragment>
